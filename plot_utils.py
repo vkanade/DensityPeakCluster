@@ -5,7 +5,7 @@ import logging
 import numpy as np
 import matplotlib.pyplot as plt
 
-def plot_scatter_diagram(which_fig, x, y, x_label = 'x', y_label = 'y', title = 'title', style_list = None):
+def plot_scatter_diagram(which_fig, x, y, x_label = 'x', y_label = 'y', title = 'title', style_list=None):
 	'''
 	Plot scatter diagram
 
@@ -19,16 +19,16 @@ def plot_scatter_diagram(which_fig, x, y, x_label = 'x', y_label = 'y', title = 
 	'''
 	styles = ['k', 'g', 'r', 'c', 'm', 'y', 'b', '#9400D3','#C0FF3E']
 	assert len(x) == len(y)
-	if style_list != None:
+	if style_list is not None:
 		assert len(x) == len(style_list) and len(styles) >= len(set(style_list))
 	plt.figure(which_fig)
 	plt.clf()
-	if style_list == None:
-		plt.plot(x, y, color=styles[0], linestyle='.', marker='.')
+	if style_list is None:
+		plt.plot(x, y, color=styles[0], linestyle='dotted', marker='.')
 	else:
 		clses = set(style_list)
 		xs, ys = {}, {}
-		for i in xrange(len(x)):
+		for i in range(len(x)):
 			try:
 				xs[style_list[i]].append(x[i])
 				ys[style_list[i]].append(y[i])
@@ -42,7 +42,7 @@ def plot_scatter_diagram(which_fig, x, y, x_label = 'x', y_label = 'y', title = 
 				added = 0
 			else:
 				style = styles[idx + added]
-			plt.plot(xs[cls], ys[cls], color=style, linestyle='.', marker='.')
+			plt.plot(xs[cls], ys[cls], color=style, linestyle='dotted', marker='.')
 	plt.title(title)
 	plt.xlabel(x_label)
 	plt.ylabel(y_label)

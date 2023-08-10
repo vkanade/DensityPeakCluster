@@ -11,25 +11,25 @@ import numpy.linalg as linalg
 class Distance():
   """
     abstract class, represent distance of two vector
-    
+
     Attributes:
-    """    
+    """
 
   __metaclass__ = ABCMeta
-         
+
   @abstractmethod
   def distance(self, vec1, vec2):
     """
     Compute distance of two vector(one line numpy array)
     if you use scipy to store the sparse matrix, please use s.getrow(line_num).toarray() build the one dimensional array
-    
+
     Args:
         vec1: the first line vector, an instance of array
         vec2: the second line vector, an instance of array
-      
+
     Returns:
         the computed distance
-    
+
     Raises:
         TypeError: if vec1 or vec2 is not numpy.ndarray and one line array
     """
@@ -38,7 +38,7 @@ class Distance():
     if vec1.ndim is not 1 or vec2.ndim is not 1:
       raise WrongVecError("vec1 or vec2 is not one line array")
     if vec1.size != vec2.size:
-      raise WrongVecError("vec1 or vec2 is not same size")    
+      raise WrongVecError("vec1 or vec2 is not same size")
     pass
 #end Distance
 
@@ -46,9 +46,9 @@ class Distance():
 class PearsonDistance(Distance):
   """
   pearson distance
-      
+
   a sub class of Distance
-  """  
+  """
 
   def distance(self, vec1, vec2):
     """
@@ -62,17 +62,17 @@ class PearsonDistance(Distance):
       return 1
     return - reduce(lambda n,m:n+m, [i*j for i,j in zip(v1, v2)]) \
            /  (sqrt1*sqrt2)
-  
+
   def _avg(self, vec):
     """
     Compute average of a vector, just compute non-zero numbers
-        
+
     Args:
         vec: a line vector, an instance of array
-          
+
     Returns:
         the average of the vector
-    """    
+    """
     size = 0.0
     for i in vec[0]:
       if i != 0: size += 1
@@ -85,9 +85,9 @@ class PearsonDistance(Distance):
 class ConsineDistance(Distance):
   """
   consine distance
-      
+
   a sub class of Distance
-  """  
+  """
 
   def distance(self, vec1, vec2):
     """
@@ -105,9 +105,9 @@ class ConsineDistance(Distance):
 class SqrtDistance(Distance):
   """
   Square distance
-      
+
   a sub class of Distance
-  """  
+  """
 
   def distance(self, vec1, vec2):
     """
@@ -118,3 +118,17 @@ class SqrtDistance(Distance):
     return sqrt(sum([pow(item, 2) for item in vec]))
 #end SqrtDistance
 
+class SquaredDistance(Distance):
+  """
+  Square distance
+
+  a sub class of Distance
+  """
+
+  def distance(self, vec1, vec2):
+    """
+    Compute distance of two vector by square distance
+    """
+    super(SquaredDistance, self).distance(vec1, vec2)      #super method
+    vec=vec1-vec2
+    return sum([pow(item, 2) for item in vec])

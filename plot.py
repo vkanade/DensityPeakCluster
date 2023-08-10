@@ -30,8 +30,8 @@ def plot_cluster(cluster):
 	logger.info("PLOT: cluster result, start multi-dimensional scaling")
 	dp = np.zeros((cluster.max_id, cluster.max_id), dtype = np.float32)
 	cls = []
-	for i in xrange(1, cluster.max_id):
-		for j in xrange(i + 1, cluster.max_id + 1):
+	for i in range(1, cluster.max_id):
+		for j in range(i + 1, cluster.max_id + 1):
 			dp[i - 1, j - 1] = cluster.distances[(i, j)]
 			dp[j - 1, i - 1] = cluster.distances[(i, j)]
 		cls.append(cluster.cluster[i])
@@ -44,7 +44,7 @@ def plot_cluster(cluster):
 	mds = manifold.MDS(max_iter=200, eps=1e-4, n_init=1,dissimilarity='precomputed')
 	dp_mds = mds.fit_transform(dp.astype(np.float64))
 	logger.info("PLOT: end mds, start plot")
-	plot_scatter_diagram(1, dp_mds[:, 0], dp_mds[:, 1], title='2D Nonclassical Multidimensional Scaling', style_list = cls)
+	plot_scatter_diagram(1, dp_mds[:, 0], dp_mds[:, 1], title='2D Nonclassical Multidimensional Scaling', style_list=cls)
 	plt.savefig("2D Nonclassical Multidimensional Scaling.jpg")
 
 
